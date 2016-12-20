@@ -39,7 +39,7 @@ where '/path/to/image.png' is the filepath to any 28 x 28 pixel png image contai
 
     $ curl -X POST -F file=@/path/to/image.png http://127.0.0.1:5000/mnist/classify/
 
-Currently, this does not work. The error occurs in the call to classify() in app.py, returning a KeyError when tf.train.import_meta_graph() tries to unpack the tensorflow graph node ops. This is strange because the call to classify() returns correctly when called locally, rather than via the API. I am new to Flask so need some more time debugging!
+Currently, this does not work. The error occurs in the call to classify() in app.py, returning a tensorflow KeyError when tf.train.import_meta_graph() tries to unpack the tensorflow graph node ops. This is strange because the call to classify() returns correctly when called locally (see above), rather than via the API. I am new to Flask so need some more time debugging!
 
 
 
