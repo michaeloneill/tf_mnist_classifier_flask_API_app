@@ -13,7 +13,7 @@
     $ pip install -r requirements.txt
     $ python load_mnist.py
 
-The second command downloads and unpacks the mnist dataset from  http://yann.lecun.com/exdb/mnist/ into a newly created directory data/
+The second command downloads and unpacks the mnist dataset (from  http://yann.lecun.com/exdb/mnist/) into a newly created directory data/
 
 ### Model training ###
 
@@ -33,7 +33,7 @@ This will overwrite the saved model and log files mentioned above.
     $ from app import classify
     $ classify('/path/to/image.png')  # returns corresponding class label prediction
 
-where '/path/to/image.png' is the filepath to any 28 x 28 pixel png image containing data of type uint8. For convenience, data/png_test_images/ contains 100 randomly chosen mnist digits from the test set that can be used for this task. This assumes Setup above has been completed.
+where '/path/to/image.png' is the filepath to any 28 x 28 pixel png image containing data of type uint8. For convenience, data/png_test_images/ contains 100 randomly chosen mnist digits from the test set that can be used for this task (this assumes Setup above has been completed).
 
 ### Running the app via the Flask API ###
 
