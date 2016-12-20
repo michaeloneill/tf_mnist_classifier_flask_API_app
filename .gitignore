@@ -1,0 +1,7 @@
+*~
+*.pyc
+*.DS_Store
+data/
+server_uploads/
+venv/
+.idea/
