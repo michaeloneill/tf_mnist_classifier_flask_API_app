@@ -21,8 +21,8 @@ Note that the classifier model (a CNN built in tensorflow and including dropout 
 
 Alternatively, to train the model from scratch:
 
-   $ cd classifier
-   $ python train_classifier.py
+	       $ cd classifier
+	       $ python train_classifier.py
 
 This will overwrite the saved model and log files mentioned above.
 
