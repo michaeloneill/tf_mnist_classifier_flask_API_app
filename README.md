@@ -1,7 +1,5 @@
 # tf_mnist_classifier_flask_API_app
 
-(Work in Progress)
-
 
 ###  Requirement ###
 
