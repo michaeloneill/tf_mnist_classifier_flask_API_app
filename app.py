@@ -55,8 +55,10 @@ def classify(image_filename):
 
 @app.route('/mnist/classify/', methods=['POST'])
 def upload_file():
+
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
+
     # check if the post request has the file part
     if 'file' not in request.files:
         print('No file part')
@@ -64,14 +66,19 @@ def upload_file():
     file = request.files['file']
 
     if file and allowed_file(file.filename):
-        print(file.filename)
+        
+        print('classifying {}'.format(file.filename))
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
-        
         result = classify(filepath)
 
         if result:
             return jsonify(result=result)
         else:
+            print('Invalid classifier prediction')
             return abort(404)
+
+    else:
+        print('Invalid image file')
+        return abort(404)
