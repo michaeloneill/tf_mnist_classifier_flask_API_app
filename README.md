@@ -37,7 +37,7 @@ where '/path/to/image.png' is the filepath to any 28 x 28 pixel png image contai
 
     $ export FLASK_APP=app.py
     $ flask run
-    $ curl -X POST -F file=@/path/to/image.png http://127.0.0.1:5000/mnist/classify/
+    $ curl -X POST -F file=@/path/to/image.png http://localhost:5000/mnist/classify/
 
 This outputs a JSON containing the class label prediction, or a 404.
 
