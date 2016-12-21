@@ -6,7 +6,8 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
-UPLOAD_FOLDER = './server_uploads/'
+ROOT = os.path.dirname(os.path.realpath(__file__))
+UPLOAD_FOLDER = os.path.join(ROOT, 'server_uploads/')
 ALLOWED_EXTENSIONS = set(['png'])
 
 app = Flask(__name__)
@@ -32,10 +33,11 @@ def classify(image_filename):
     img = np.reshape(img, (1, 28, 28, 1))
     
     with tf.Session() as sess:
-        
-        saver = tf.train.import_meta_graph(
-            './classifier/training_results/best_model-4699.meta')
-        saver.restore(sess, './classifier/training_results/best_model-4699')
+
+        model_path_prefix = os.path.join(
+            ROOT, 'classifier/training_results/best_model-4699')
+        saver = tf.train.import_meta_graph(model_path_prefix+'.meta')
+        saver.restore(sess, model_path_prefix)
 
         x = tf.get_collection('x')[0]
         dropout_keep_prob = tf.get_collection('dropout_keep_prob')[0]
@@ -66,19 +68,13 @@ def upload_file():
     file = request.files['file']
 
     if file and allowed_file(file.filename):
-        
         print('classifying {}'.format(file.filename))
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
         result = classify(filepath)
-
-        if result:
-            return jsonify(result=result)
-        else:
-            print('Invalid classifier prediction')
-            return abort(404)
-
+        return jsonify(result=result)
     else:
-        print('Invalid image file')
+        print('Invalid file')
         return abort(404)
+
