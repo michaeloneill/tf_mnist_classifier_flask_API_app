@@ -1,3 +1,5 @@
+#  Adapted from https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/learn/python/learn/datasets/mnist.py
+
 import numpy as np
 import os
 import gzip
@@ -37,7 +39,7 @@ def extract_labels(f):
         buf = bytestream.read(num_items)
         labels = np.frombuffer(buf, dtype=np.uint8)
 
-        # convert to one-hot
+        # Convert to one-hot
         y = np.zeros((num_items, 10))
         for i in range(num_items):
             y[i, labels[i]] = 1
@@ -96,7 +98,7 @@ def download_and_extract():
     with open(dir_name+'mnist.pkl', 'wb') as f:
         cPickle.dump(data, f, -1)
 
-    # save some images as png for testing
+    # Save some images as png for testing
     sub_dir = dir_name + 'png_test_images/'
     if not os.path.exists(sub_dir):
         os.makedirs(sub_dir)

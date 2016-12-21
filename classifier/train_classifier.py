@@ -21,7 +21,7 @@ def main():
                       'dropout': [True]}
     }
     params_train = {
-        'miniBatchSize': 100,
+        'mini_batch_size': 100,
         'epochs': 10,
         'learning_rate': 0.01,
         'dropout_keep_prob': 0.5,

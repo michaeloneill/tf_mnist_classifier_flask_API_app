@@ -64,11 +64,11 @@ def batch_norm_wrapper(inputs, is_training, layer_name,
 ##############################################################################
 
 
-def convPoolLayer(
+def conv_pool_layer(
         inputs, num_outputs, kernel_size, stride, padding,
         layer_name, is_training, activation_fn, pool=True):
     """
-    inputs is b x imWidth x imHight x nChannels
+    inputs is batch_size x H x W x n_channels
     """
     with tf.name_scope(layer_name):
         with tf.name_scope('filtr'):
@@ -90,9 +90,9 @@ def convPoolLayer(
             return activations
 
     
-def fullyConnectedLayer(inputs, num_outputs, layer_name,
-                        is_training,
-                        activation_fn):
+def fully_connected_layer(inputs, num_outputs, layer_name,
+                          is_training,
+                          activation_fn):
 
     with tf.name_scope(layer_name):
         with tf.variable_scope('weights'):

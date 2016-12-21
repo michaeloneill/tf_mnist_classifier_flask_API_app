@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from layers import fullyConnectedLayer, convPoolLayer
+from layers import fully_connected_layer, conv_pool_layer
 
 ACTIVATIONS = {
     'sigmoid': tf.sigmoid,
@@ -81,7 +81,7 @@ def build_cnn_inference_graph(x, dropout_keep_prob, is_training, params):
         else:
             inpt = prev_layer
 
-        layer = convPoolLayer(
+        layer = conv_pool_layer(
             inputs=inpt,
             num_outputs=num_outputs,
             kernel_size=kernel_size,
@@ -94,7 +94,7 @@ def build_cnn_inference_graph(x, dropout_keep_prob, is_training, params):
         )
         prev_layer = layer
 
-    # flatten output of last conv_layer and pass to fc layers
+    # Flatten output of last conv_layer and pass to fc layers
     flattened_dim = np.prod(prev_layer.get_shape().as_list()[1:])
     flattened = tf.reshape(prev_layer, [-1, flattened_dim])
 
@@ -123,7 +123,7 @@ def build_mlp_inference_graph(x, dropout_keep_prob, is_training, params):
             with tf.name_scope('dropout'):
                 inpt = tf.nn.dropout(inpt, dropout_keep_prob)
 
-        layer = fullyConnectedLayer(
+        layer = fully_connected_layer(
             inputs=inpt,
             num_outputs=num_outputs,
             layer_name=layer_name,

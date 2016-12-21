@@ -59,7 +59,7 @@ def upload_file():
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
 
-    # check if the post request has the file part
+    # Check if the post request has the file part
     if 'file' not in request.files:
         print('No file part')
         return abort(404)

@@ -1,17 +1,17 @@
 import tensorflow as tf
 
 
-def run_train(train_set, params, model, sess, miniBatchIndex, merged):
+def run_train(train_set, params, model, sess, mini_batch_index, merged):
     
     return sess.run(
         [model['train'], model['loss'], merged],
         feed_dict={
             model['x']:
-            train_set[0][miniBatchIndex*params['miniBatchSize']:
-                         (miniBatchIndex+1)*params['miniBatchSize']],
+            train_set[0][mini_batch_index*params['mini_batch_size']:
+                         (mini_batch_index+1)*params['mini_batch_size']],
             model['y_']:
-            train_set[1][miniBatchIndex*params['miniBatchSize']:
-                         (miniBatchIndex+1)*params['miniBatchSize']],
+            train_set[1][mini_batch_index*params['mini_batch_size']:
+                         (mini_batch_index+1)*params['mini_batch_size']],
             model['dropout_keep_prob']: params['dropout_keep_prob'],
             model['is_training']: 1.0
         }
@@ -51,24 +51,24 @@ def train(train_set, val_set, test_set, params, model, sess, results_dir):
     train_writer = tf.summary.FileWriter(results_dir+'logs/train', sess.graph)
     val_writer = tf.summary.FileWriter(results_dir+'logs/val', sess.graph)
     
-    nBatchTrain = train_set[0].shape[0]/params['miniBatchSize']
+    n_batch_train = train_set[0].shape[0]/params['mini_batch_size']
     best_accuracy_val = 0.0
     best_model_file = None
     best_iter = None
     
     print 'starting training...'
     for epoch in range(params['epochs']):
-        for miniBatchIndex in range(nBatchTrain):
-            iteration = epoch*nBatchTrain + miniBatchIndex
+        for mini_batch_index in range(n_batch_train):
+            iteration = epoch*n_batch_train + mini_batch_index
 
             _, loss_train, summary = run_train(train_set, params, model,
-                                               sess, miniBatchIndex, merged)
+                                               sess, mini_batch_index, merged)
             train_writer.add_summary(summary, iteration)
             
             if (iteration+1) % params['monitor_frequency'] == 0:
                 print 'training loss for minibatch {0}/{1} '\
                     'epoch {2} is: {3:.2f}'.format(
-                        miniBatchIndex+1, nBatchTrain, epoch+1, loss_train)
+                        mini_batch_index+1, n_batch_train, epoch+1, loss_train)
                 
                 accuracy_val, summary = run_val(
                     val_set, params, model, sess, merged)
