@@ -24,10 +24,8 @@ def classify(image_filename):
     img = Image.open(image_filename)
     img = np.array(img)
 
-    assert img.dtype == 'uint8', \
-        'image data must be uint8'
-    assert img.shape == (28, 28), \
-        'image shape must be 28x28'
+    if img.dtype != 'uint8' or img.shape != (28, 28):
+        raise ValueError('image must 28x28 uint8')
 
     img = img.astype(np.float32)/255
     img = np.reshape(img, (1, 28, 28, 1))
@@ -72,8 +70,16 @@ def upload_file():
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
-        result = classify(filepath)
+
+        try:
+            result = classify(filepath)
+        except Exception as e:
+            print type(e)
+            print e
+
+        os.remove(filepath)  # free up space on server
         return jsonify(result=result)
+    
     else:
         print('Invalid file')
         return abort(404)
